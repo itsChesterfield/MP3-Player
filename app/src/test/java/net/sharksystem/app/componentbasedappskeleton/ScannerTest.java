@@ -16,18 +16,18 @@ public class ScannerTest {
 
     @Test
     public void einFile() {
-        ScannerImpl file = new ScannerImpl("/Users/maxdanigel/Library/CloudStorage/OneDrive-FreigegebeneBibliotheken–onedrive/MP3 Player Programm/MP3-Player/app/src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/einFile");
+        ScannerImpl file = new ScannerImpl("src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/einFile");
         file.scanForFiles();
         assertEquals(1, file.scanForFiles().size());
     }
     @Test
     public void mehrereFiles(){
-        ScannerImpl file = new ScannerImpl("/Users/maxdanigel/Library/CloudStorage/OneDrive-FreigegebeneBibliotheken–onedrive/MP3 Player Programm/MP3-Player/app/src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/mehrereFile");
+        ScannerImpl file = new ScannerImpl("src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/mehrereFile");
         assertEquals(3, file.scanForFiles().size());
     }
     @Test
     public void keinFile(){
-        ScannerImpl file = new ScannerImpl("/Users/maxdanigel/Library/CloudStorage/OneDrive-FreigegebeneBibliotheken–onedrive/MP3 Player Programm/MP3-Player/app/src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/garKeineFile");
+        ScannerImpl file = new ScannerImpl("src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/garKeineFile");
         assertEquals(0, file.scanForFiles().size());
     }
 }
