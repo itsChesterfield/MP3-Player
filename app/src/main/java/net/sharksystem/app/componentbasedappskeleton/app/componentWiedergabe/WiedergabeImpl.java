@@ -35,13 +35,20 @@ public class WiedergabeImpl implements Wiedergabe{
         } catch (IOException e) {
             return false;
         }
-
-
         return true;
     }
 
+    /**
+     * Pausiert die Datei.
+     * @return true, wenn es geklappt hat.
+     */
     @Override
     public boolean pause() {
+        try{
+            player.pause();
+        } catch (RuntimeException e) {
+            return false;
+        }
         return true;
     }
 
