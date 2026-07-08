@@ -21,6 +21,7 @@ public class Controller {
     Wiedergabe wiedergabe;
     MP3File mp3;
     int currentTime;
+    int tickSpeicher = 0;
 
     /**
      * Konstruktor für den Controller.
@@ -68,13 +69,34 @@ public class Controller {
                 }
             }
         }
+
+    /**
+     * Sobald man auf eine mp3 klickt, wird die Methode ausgelöst.
+     * Sie legt die aktuelle MP3 fest, in der Zwischenablage. Holt sich den aktuellen Fortschritt von der Datei die gespeichert wurde
+     * und zeigt die MP3 und die aktuelle Zeit auf dem Display an.
+     * Ah und startet sie btw.
+     * @param mp3 übernimmt die gewünschte bzw. angeklickte mp3.
+     */
     public void onDateiAusgewaehlt(MP3File mp3){
         this.mp3 = mp3;
         this.currentTime = fortschritt.readCurrentTime(mp3);
         wiedergabe.play(mp3, currentTime);
         view.showCurrentMP3(mp3, currentTime);
     }
-    public void onTick(){}
+
+    /**
+     * onTick ist eine Methode welche die aktuelle Zeit updatet, sowohl im Zwischenspeicher als auch aufm Display (Jede Sekunde).
+     * onTick sorgt auch dafür, das alle 15 ticks die Zeit in Fortschritt gespeichert wird.
+     */
+    public void onTick() {
+        currentTime++;
+        view.updateProgress(currentTime);
+        tickSpeicher++;
+        if(tickSpeicher == 15) {
+            fortschritt.updateTime(mp3, currentTime);
+            tickSpeicher = 0;
+        }
+    }
     public void onPause(){}
     public void onEmpfangAktivieren(){}
     public void onPlayerSchliessen(){}
