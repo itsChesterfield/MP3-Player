@@ -35,9 +35,10 @@ public class Controller {
     }
     /**
      * Methode die beim Start der App ausgeführt wird.
+     * Sie liest die aktuelle Bibliothek und sendet das Ergebnis an die View.
      */
     public void onAppStart(){
-
+        view.showLibrary(bibliothek.readLibrary());
     }
 
     /**
@@ -46,11 +47,9 @@ public class Controller {
     public void syncBibliothek(){
 
     }
-    public void removeFile(MP3File mp3){}
     public void onDateiAusgewaehlt(MP3File mp3){}
     public void onTick(){}
     public void onPause(){}
-    public void onEmpfangenAktivieren(){}
     public void onEmpfangAktivieren(){}
     public void onPlayerSchliessen(){}
 }
