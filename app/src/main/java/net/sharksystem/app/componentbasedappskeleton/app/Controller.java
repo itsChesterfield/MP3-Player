@@ -119,7 +119,15 @@ public class Controller {
             }
         });
     }
-    public void onPlayerSchliessen(){}
+
+    /**
+     * Diese Methode speichert den Fortschritt, schließt die Wiedergabe und gibt die aktuelle Bibliothek wieder.
+     */
+    public void onPlayerSchliessen(){
+        fortschritt.updateTime(mp3, currentTime);
+        wiedergabe.pause();
+        view.showLibrary(bibliothek.readLibrary());
+    }
 
 
     /**
