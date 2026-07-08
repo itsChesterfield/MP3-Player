@@ -42,6 +42,7 @@ public class BibliothekImpl implements Bibliothek{
     @Override
     public boolean addFile(MP3File mp3) {
         if(mp3 == null) return false; //TODO: Muss ich die MP3 noch auf etwas anderes überprüfen?
+        if(library.contains(mp3)) return false;
         library.add(mp3);
         return true;
     }
@@ -54,7 +55,6 @@ public class BibliothekImpl implements Bibliothek{
     @Override
     public boolean removeFile(MP3File mp3) {
         if(mp3 == null) return false;//TODO: Muss ich die MP3 noch auf etwas anderes überprüfen?
-        library.remove(mp3);
-        return true;
+        return library.remove(mp3);
     }
 }
