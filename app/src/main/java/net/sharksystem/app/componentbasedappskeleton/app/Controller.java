@@ -19,6 +19,8 @@ public class Controller {
     Transfer transfer;
     View view;
     Wiedergabe wiedergabe;
+    MP3File mp3;
+    int currentTime;
 
     /**
      * Konstruktor für den Controller.
@@ -67,7 +69,10 @@ public class Controller {
             }
         }
     public void onDateiAusgewaehlt(MP3File mp3){
-        f
+        this.mp3 = mp3;
+        this.currentTime = fortschritt.readCurrentTime(mp3);
+        wiedergabe.play(mp3, currentTime);
+        view.showCurrentMP3(mp3, currentTime);
     }
     public void onTick(){}
     public void onPause(){}
