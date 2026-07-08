@@ -1,7 +1,6 @@
 package net.sharksystem.app.componentbasedappskeleton.app.componentView;
 
-import android.bluetooth.BluetoothDevice;
-
+import net.sharksystem.app.componentbasedappskeleton.app.model.Device;
 import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
 import java.util.List;
@@ -15,7 +14,13 @@ public interface View {
 
     void showCurrentMP3(MP3File file, int currentTime);
 
-    void showDeviceList(List<BluetoothDevice> device);
+    void showDeviceList(List<Device> deviceList);
 
-    void showTransferStatus(String status);
+    void showTransferStatus(Device device, String status);
+
+    void addToLibrary(MP3File mp3);
+
+    void removeFromLibrary(MP3File mp3);
+
+    void updateProgress(int progress);
 }

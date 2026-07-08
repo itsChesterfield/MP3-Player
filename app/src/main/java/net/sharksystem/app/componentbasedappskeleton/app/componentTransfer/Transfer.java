@@ -1,19 +1,15 @@
 package net.sharksystem.app.componentbasedappskeleton.app.componentTransfer;
 
-import android.bluetooth.BluetoothDevice;
+import net.sharksystem.app.componentbasedappskeleton.app.model.Device;
 import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 import java.util.List;
 
 /**
- * Das ist die Schnittstelle für die Komponente Bibliothek.
+ * Interface für den Austausch von MP3Files.
  */
 public interface Transfer {
-
-    List<BluetoothDevice> discoverDevice();
-
-    void sendFile(MP3File file, BluetoothDevice device);
-
-    void enableReceiving();
-
-    MP3File recieveFile();
+    void discoverDevices(DiscoveryCallback callback);
+    void sendFile(MP3File mp3, List<Device> deviceList, TransferCallback transferCallback);
+    void enableReceiving(ReceiveCallback callback);
+    void disableReceiving();
 }
