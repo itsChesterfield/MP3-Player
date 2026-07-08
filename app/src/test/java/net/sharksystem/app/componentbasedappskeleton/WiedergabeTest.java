@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import android.media.MediaPlayer;
+
 import net.sharksystem.app.componentbasedappskeleton.app.componentWiedergabe.WiedergabeImpl;
 import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
@@ -13,7 +15,7 @@ import org.junit.Test;
  * Testklasse für die Klasse Test. Wir überprüfen hier ob die Methoden in Wiedergabe richtig funktionieren.
  */
 public class WiedergabeTest {
-    WiedergabeImpl wiedergabeObjekt = new WiedergabeImpl();
+    WiedergabeImpl wiedergabeObjekt = new WiedergabeImpl(new MediaPlayer());
     MP3File littleMP3 = new MP3File("meinErsterSongIGuess", "src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/einFile/einTest");
 
 
