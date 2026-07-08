@@ -3,6 +3,7 @@ package net.sharksystem.app.componentbasedappskeleton.app;
 import net.sharksystem.app.componentbasedappskeleton.app.componentBibliothek.Bibliothek;
 import net.sharksystem.app.componentbasedappskeleton.app.componentFortschritt.Fortschritt;
 import net.sharksystem.app.componentbasedappskeleton.app.componentScanner.Scanner;
+import net.sharksystem.app.componentbasedappskeleton.app.componentTransfer.ReceiveCallback;
 import net.sharksystem.app.componentbasedappskeleton.app.componentTransfer.Transfer;
 import net.sharksystem.app.componentbasedappskeleton.app.componentWiedergabe.Wiedergabe;
 import net.sharksystem.app.componentbasedappskeleton.app.componentView.View;
@@ -97,8 +98,27 @@ public class Controller {
             tickSpeicher = 0;
         }
     }
-    public void onPause(){}
-    public void onEmpfangAktivieren(){}
+
+    /**
+     * onPause speichert die aktuelle Zeit und pausiert dann die Audio.
+     */
+    public void onPause(){
+        fortschritt.updateTime(mp3, currentTime);
+        wiedergabe.pause();
+    }
+
+    /**
+     * Noch kein Kommentar.
+     */
+    public void onEmpfangAktivieren(){ //TODO: Das ist eine schwierige Stelle die ich noch nicht verstehe.
+        transfer.enableReceiving(new ReceiveCallback() {
+            @Override
+            public void onFileReceived(MP3File mp3) {
+                bibliothek.addFile(mp3);
+                view.addToLibrary(mp3);
+            }
+        });
+    }
     public void onPlayerSchliessen(){}
 
 
