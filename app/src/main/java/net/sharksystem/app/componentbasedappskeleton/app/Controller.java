@@ -8,6 +8,10 @@ import net.sharksystem.app.componentbasedappskeleton.app.componentWiedergabe.Wie
 import net.sharksystem.app.componentbasedappskeleton.app.componentView.View;
 import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Controller {
     Bibliothek bibliothek;
     Scanner scanner;
@@ -45,11 +49,34 @@ public class Controller {
      * Vergleicht die aktuelle Liste mit der neuen Liste an MP3's die der Scan gefunden hat.
      */
     public void syncBibliothek(){
+        List<MP3File> liste = scanner.scanForFiles();
+        List<MP3File> bib = bibliothek.readLibrary();
 
+        for (MP3File file : liste) {
+            if (!bib.contains(file)){
+                bibliothek.addFile(file);
+                view.addToLibrary(file);
+                }
+            }
+
+        for(MP3File file : bib){
+            if(!liste.contains(file)){
+                bibliothek.removeFile(file);
+                view.removeFromLibrary(file);
+                }
+            }
+        }
+    public void onDateiAusgewaehlt(MP3File mp3){
+        f
     }
-    public void onDateiAusgewaehlt(MP3File mp3){}
     public void onTick(){}
     public void onPause(){}
     public void onEmpfangAktivieren(){}
     public void onPlayerSchliessen(){}
+
+
+    /**
+     * if(liste.contains(file) = true && bib.contains(file) = false){bibliothek.add(file);}
+     * if(liste.contains(file) = false && bib.contains(file) = true){bibliothek.remove(file);}
+     */
 }
