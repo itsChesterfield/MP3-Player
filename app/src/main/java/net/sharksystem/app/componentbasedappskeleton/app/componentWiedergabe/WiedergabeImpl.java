@@ -52,15 +52,35 @@ public class WiedergabeImpl implements Wiedergabe{
         return true;
     }
 
+    /**
+     * Springt eine angegebene Zeit vorwärts.
+     * @param seconds Sekunden anzahl
+     * @return true, wenn es geklappt
+     */
     @Override
     public boolean forward(int seconds) {
         this.startSeconds += seconds;
+        try{
+            player.seekTo(startSeconds * 1000);
+        } catch (IllegalStateException e) {
+            return false;
+        }
         return true;
     }
 
+    /**
+     * Springt eine angegebene Zeit zurück.
+     * @param seconds bestimmte Zeit vom Controller die vorgesprungen werden soll.
+     * @return true, falls es geklappt hat.
+     */
     @Override
     public boolean backward(int seconds) {
         this.startSeconds -= seconds;
+        try{
+            player.seekTo(startSeconds * 1000);
+        } catch (IllegalStateException e) {
+            return false;
+        }
         return true;
     }
     public int getCurrentTime(){ //TODO: Löschen dient nur der aktuellen Überprüfung.
