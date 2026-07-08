@@ -6,6 +6,7 @@ import net.sharksystem.app.componentbasedappskeleton.app.componentScanner.Scanne
 import net.sharksystem.app.componentbasedappskeleton.app.componentTransfer.Transfer;
 import net.sharksystem.app.componentbasedappskeleton.app.componentWiedergabe.Wiedergabe;
 import net.sharksystem.app.componentbasedappskeleton.app.componentView.View;
+import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
 public class Controller {
     Bibliothek bibliothek;
@@ -39,4 +40,17 @@ public class Controller {
 
     }
 
+    /**
+     * Vergleicht die aktuelle Liste mit der neuen Liste an MP3's die der Scan gefunden hat.
+     */
+    public void syncBibliothek(){
+
+    }
+    public void removeFile(MP3File mp3){}
+    public void onDateiAusgewaehlt(MP3File mp3){}
+    public void onTick(){}
+    public void onPause(){}
+    public void onEmpfangenAktivieren(){}
+    public void onEmpfangAktivieren(){}
+    public void onPlayerSchliessen(){}
 }
