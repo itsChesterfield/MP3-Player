@@ -1,6 +1,6 @@
 package net.sharksystem.app.componentbasedappskeleton;
 
-import net.sharksystem.app.componentbasedappskeleton.app.componentModel.MP3File;
+import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
 import org.junit.Test;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package net.sharksystem.app.componentbasedappskeleton.app.componentModel;
+package net.sharksystem.app.componentbasedappskeleton.app.model;
 
 /**
  * Eine Klasse welche eine MP3 Datie anlegen tut.
@@ -31,9 +31,26 @@ public class MP3File {
     public String getDateiPfad(){
         return this.dateiPfad;
     }
-    public static void main(String[] args){
-        MP3File mp3 = new MP3File("Test", "Test");
-        System.out.println(mp3.getName());
-        System.out.println(mp3.getDateiPfad());
+
+    /**
+     * Methode welche Vergleicht ob der angegebene Dateipfad gleich ist.
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MP3File mp3File = (MP3File) o;
+        return java.util.Objects.equals(dateiPfad, mp3File.dateiPfad);
+    }
+
+    /**
+     * berechnet den hashCode wo eine mp3 in der HashMap sich befindet.
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(dateiPfad);
     }
 }
