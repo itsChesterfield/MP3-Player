@@ -11,11 +11,15 @@ import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
 /**
  * Testklasse für die Klasse Test. Wir überprüfen hier ob die Methoden in Wiedergabe richtig funktionieren.
  */
 public class WiedergabeTest {
-    WiedergabeImpl wiedergabeObjekt = new WiedergabeImpl(new MediaPlayer());
+    MediaPlayer player = Mockito.mock(MediaPlayer.class);
+    WiedergabeImpl wiedergabeObjekt = new WiedergabeImpl(player);
     MP3File littleMP3 = new MP3File("meinErsterSongIGuess", "src/test/java/net/sharksystem/app/componentbasedappskeleton/MusikTestOrdner/einFile/einTest");
 
 
