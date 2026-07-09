@@ -6,13 +6,16 @@ import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 
 import androidx.annotation.RequiresPermission;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.UUID;
 public class TransferImpl implements Transfer{
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     BluetoothAdapter bluetooth;
+    private Thread receivingThread;
+    private boolean isReceiving = false;
     public TransferImpl(BluetoothAdapter bluetooth){
         this.bluetooth = bluetooth;
     }
@@ -44,6 +49,12 @@ public class TransferImpl implements Transfer{
         callback.onDevicesFound(devices);
     }
 
+    /**
+     * Schickt Dateien über Bluetooth.
+     * @param mp3
+     * @param deviceList
+     * @param transferCallback
+     */
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     @Override
     public void sendFile(MP3File mp3, List<Device> deviceList, TransferCallback transferCallback) {
@@ -85,13 +96,75 @@ public class TransferImpl implements Transfer{
         }
     }
 
+    /**
+     * Aktiviert die Empfangsfunktion.
+     * @param callback
+     */
+    @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
     @Override
     public void enableReceiving(ReceiveCallback callback) {
+        if (bluetooth == null) return;
 
+        receivingThread = new Thread(() -> {
+            BluetoothServerSocket serverSocket = null;
+            try {
+                serverSocket = bluetooth.listenUsingRfcommWithServiceRecord("MP3Transfer", MY_UUID);
+                while (isReceiving) {
+                    BluetoothSocket socket = null;
+                    FileOutputStream fos = null;
+                    InputStream is = null;
+                    try {
+                        socket = serverSocket.accept();
+                        is = socket.getInputStream();
+
+                        File tempFile = File.createTempFile("received_", ".mp3");
+                        fos = new FileOutputStream(tempFile);
+
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = is.read(buffer)) != -1) {
+                            fos.write(buffer, 0, bytesRead);
+                        }
+
+                        MP3File mp3 = new MP3File(tempFile.getName(), tempFile.getAbsolutePath());
+                        callback.onFileReceived(mp3);
+                    } catch (IOException e) {
+                        // Einzelne Übertragung fehlgeschlagen, weiter warten
+                    } finally {
+                        try {
+                            if (fos != null) fos.close();
+                            if (is != null) is.close();
+                            if (socket != null) socket.close();
+                        } catch (IOException e) {
+                            // Ignorieren beim Schließen
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                // ServerSocket konnte nicht geöffnet werden
+            } finally {
+                try {
+                    if (serverSocket != null) serverSocket.close();
+                } catch (IOException e) {
+                    // Ignorieren beim Schließen
+                }
+            }
+        });
+
+        isReceiving = true;
+        receivingThread.start();
     }
 
+    /**
+     * Deaktiviert die Empfangsfunktion.
+     */
     @Override
     public void disableReceiving() {
-
+        isReceiving = false;
+        if (receivingThread != null) {
+            receivingThread.interrupt();
+            receivingThread = null;
+        }
     }
+
 }
