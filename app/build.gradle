@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'net.sharksystem.app.componentbasedappskeleton'
-    compileSdk 32
+    compileSdk 35
 
     defaultConfig {
         applicationId "net.sharksystem.app.componentbasedappskeleton"
         minSdk 21
-        targetSdk 32
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -28,6 +28,14 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.jetbrains.kotlin') {
+                details.useVersion "1.8.22"
+            }
+        }
     }
 }
 

@@ -14,6 +14,9 @@ import net.sharksystem.app.componentbasedappskeleton.app.model.MP3File;
 
 import java.util.List;
 
+/**
+ * Übsersetzt unsere Listeeinträge von MP3 Dateien, in RecyclerViews.
+ */
 public class MP3Adapter extends RecyclerView.Adapter{
     private List<MP3File> liste; // Liste welche alle unsere MP3Files beinhaltet.
 

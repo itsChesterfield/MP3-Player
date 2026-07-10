@@ -33,6 +33,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".app.ui.ComponentAActivity" />
+        <activity android:name=".app.ui.BibliothekUI" />
     </application>
 
 </manifest>
